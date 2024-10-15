@@ -67,6 +67,7 @@ void MainForm::OnMouseUp(const MouseEventArgs e){
 
 }
 
+// 看起来这里会每次都全部重新绘制所有的内容，并且绘制完成后没有pop操作
 void MainForm::OnPaint(const MouseEventArgs e){
     
     // 针对直线
@@ -90,4 +91,6 @@ void MainForm::OnPaint(const MouseEventArgs e){
             rectVector[i].height
         );
     }
+
+    Form::OnPaint(e);
 }
