@@ -1,9 +1,11 @@
 #include <vector>
 #include <iostream>
+#include <cmath>
 #include <algorithm>
 #include "MouseEventArgs.h"
 #include "Line.h"
 #include "Rect.h"
+#include "Circle.h"
 #include "Form.h"
 using namespace std;
 
@@ -16,6 +18,8 @@ private:
 
     vector<Line> lineVector;
     vector<Rect> rectVector;
+    // 新增circle向量
+    vector<Circle> circleVector;
 
 public:
     MainForm(/* args */);
@@ -54,11 +58,15 @@ void MainForm::OnMouseUp(const MouseEventArgs e){
 
     // 判断画的是哪种形状，选择绘制方法（这里的判断可能是来自于预先设置的某个全局变量）
     if(rdoLine.Checked){
-        Line line(p1, p2)
+        Line line(p1, p2);
         lineVector.push_back(line);
     }else if(rdoRect.Checked){
         Rect rect(p1, abs(p2.x-p1.x), abs(p2.y-p1.y));
         rectVector.push_back(rect);
+    }else if(rdoCircle.Checked){
+        // 新增Circle的向量存储过程
+        Circle circle(p1, sqrt((float)(pow((p1.x-p2.x),2) + pow((p1.y-p2.y),2))));
+        circleVector.push_back(circle);
     }
 
     // 刷新页面，这个应当是
@@ -91,6 +99,16 @@ void MainForm::OnPaint(const MouseEventArgs e){
             rectVector[i].height
         );
     }
+
+    // 针对圆形：新增打印circle的过程
+    for(int i = 0; i < circleVector.size(); i++){
+        e.Graphics.DrawCircle(
+            Pens.Blue,
+            circleVector[i].origin,
+            circleVector[i].radius
+        );
+    }
+
 
     Form::OnPaint(e);
 }
