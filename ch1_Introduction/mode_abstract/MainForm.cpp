@@ -1,9 +1,11 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include <cmath>
 #include "MouseEventArgs.h"
 #include "Line.h"
 #include "Rect.h"
+#include "Circle.h"
 #include "Form.h"
 #include "Shape.h"
 
@@ -60,6 +62,8 @@ void MainForm::OnMouseUp(const MouseEventArgs e){
         shapeVector.push_back(shape);
     }else if(rdoRect.Checked){
         shapeVector.push_back(new Rect(p1, abs(p2.x-p1.x), abs(p2.y-p1.y)));
+    }else if(rdoCircle.Checked){
+        shapeVector.push_back(new Circle(p1, sqrt((float)(pow((p1.x-p2.x),2) + pow((p1.y-p2.y),2)))));
     }
 
     // 刷新页面，这个应当是
