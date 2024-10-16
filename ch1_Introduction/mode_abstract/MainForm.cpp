@@ -39,6 +39,10 @@ MainForm::MainForm(/* args */)
 
 MainForm::~MainForm()
 {
+    for(auto shape: shapeVector){
+        delete shape;
+    }
+    shapeVector.clear();
 }
 
 // 负责刷新

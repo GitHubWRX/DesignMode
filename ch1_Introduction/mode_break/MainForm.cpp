@@ -39,6 +39,9 @@ MainForm::MainForm(/* args */)
 
 MainForm::~MainForm()
 {
+    lineVector.clear();
+    rectVector.clear();
+    circleVector.clear();
 }
 
 // 负责刷新
