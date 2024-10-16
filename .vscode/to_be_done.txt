@@ -1,0 +1,1 @@
+ch1_Introduction中，对于不同的绘制类型，使用了if-else进行判断，然后将对象添加至对应Vector，后续可由Factory统一处理
