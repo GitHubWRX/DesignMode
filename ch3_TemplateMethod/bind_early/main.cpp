@@ -1,7 +1,7 @@
 #include "lib.h"
 #include "app.h"
 
-void main(){
+int main(){
     Lib lib;
     App app;
 
@@ -17,4 +17,5 @@ void main(){
         /* code */
         app.Step4();
     }
+    return 0;
 }
