@@ -1,4 +1,4 @@
-#include "../common.h"
+#include "../../common.h"
 #include "tax.h"
 
 class SalesOrder{
@@ -12,6 +12,8 @@ public:
             // US***
         }else if(tax == DE_Tax){
             // DE***
+        }else if(tax == FR_Tax){
+            // FR***
         }
     }
 };
