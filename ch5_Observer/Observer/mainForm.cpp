@@ -9,38 +9,44 @@
 #include "FileSpliter.h"
 #include "ProgressBar.h"
 #include "Pie.h"
+#include "IProgress.h"
 
 // 重定义可以使用using或者typedef
 // using TextBox1 = string;
 // typedef string TextBox2;
 
-class mainForm : public Form
+class mainForm : public Form, public IProgress
 {
 private:
     /* data */
     TextBox* m_txtFilePath; // 待分割文件的路径
     TextBox* m_txtFileNumber; // 待分割文件的个数
-    ProgressBar* m_progressBar; // 具体类型传递1
-    Pie* m_pie; // 具体类型传递2
+    ProgressBar* m_progressBar; // 这里不用修改，依然使用具体的类，其内部的setValue方法将被包装
 public:
-    mainForm(TextBox* txtFilePath, TextBox* txtFileNumber, ProgressBar* progressBar, Pie* pie);
+    mainForm(TextBox* txtFilePath, TextBox* txtFileNumber, ProgressBar* progressBar);
 
     void Button1_Click(){
         string filePath = m_txtFilePath->getText();
         int number = atoi(m_txtFileNumber->getText().c_str());
 
-        FileSpliter spliter(filePath, number, m_progressBar, m_pie); // 修改，具体类型传递2
+        FileSpliter spliter(filePath, number, this); // 可传递本类的指针，因实现了IProgress
         spliter.split();
     }
+
+    virtual void DoProgress(float value);
 
     ~mainForm();
 };
 
-mainForm::mainForm(TextBox* txtFilePath, TextBox* txtFileNumber, ProgressBar* progressBar, Pie* pie):
+mainForm::mainForm(TextBox* txtFilePath, TextBox* txtFileNumber, ProgressBar* progressBar):
     m_txtFilePath(txtFilePath), 
     m_txtFileNumber(txtFileNumber), 
-    m_progressBar(progressBar), // 具体类型的传递1
-    m_pie(pie){ // 具体类型的传递2
+    m_progressBar(progressBar){ // 具体类型的传递1
+}
+
+void mainForm::DoProgress(float value)
+{
+    m_progressBar->setValue(value);  // 不同的具体类使用不同的方法，但都封装成DoProgress
 }
 
 mainForm::~mainForm()
