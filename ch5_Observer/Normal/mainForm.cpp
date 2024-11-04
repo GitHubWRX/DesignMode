@@ -8,6 +8,7 @@
 #include "TextBox.h"
 #include "FileSpliter.h"
 #include "ProgressBar.h"
+#include "Pie.h"
 
 // 重定义可以使用using或者typedef
 // using TextBox1 = string;
@@ -19,26 +20,27 @@ private:
     /* data */
     TextBox* m_txtFilePath; // 待分割文件的路径
     TextBox* m_txtFileNumber; // 待分割文件的个数
-    ProgressBar* m_probressBar; // 具体类型传递
+    ProgressBar* m_progressBar; // 具体类型传递1
+    Pie* m_pie; // 具体类型传递2
 public:
-    mainForm(TextBox* m_txtFilePath, TextBox* m_txtFileNumber, ProgressBar* m_probressBar);
+    mainForm(TextBox* txtFilePath, TextBox* txtFileNumber, ProgressBar* progressBar, Pie* pie);
 
     void Button1_Click(){
         string filePath = m_txtFilePath->getText();
         int number = atoi(m_txtFileNumber->getText().c_str());
 
-        FileSpliter spliter(filePath, number, m_probressBar);
+        FileSpliter spliter(filePath, number, m_progressBar, m_pie); // 修改，具体类型传递2
         spliter.split();
     }
 
     ~mainForm();
 };
 
-mainForm::mainForm(TextBox* txtFilePath, TextBox* txtFileNumber, ProgressBar* probressBar):
+mainForm::mainForm(TextBox* txtFilePath, TextBox* txtFileNumber, ProgressBar* progressBar, Pie* pie):
     m_txtFilePath(txtFilePath), 
     m_txtFileNumber(txtFileNumber), 
-    m_probressBar(probressBar){ // 具体类型的传递1
-
+    m_progressBar(progressBar), // 具体类型的传递1
+    m_pie(pie){ // 具体类型的传递2
 }
 
 mainForm::~mainForm()
