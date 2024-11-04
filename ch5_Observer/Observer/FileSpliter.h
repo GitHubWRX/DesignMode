@@ -16,6 +16,9 @@ public:
     FileSpliter(string filePath, int nubmer, IProgress* iprogress);
     void split(){};
     ~FileSpliter();
+
+protected:
+    void onProgress(float value);
 };
 
 FileSpliter::FileSpliter(string filePath, int number, IProgress* iprogress)
@@ -26,13 +29,20 @@ FileSpliter::FileSpliter(string filePath, int number, IProgress* iprogress)
     m_iprogress = iprogress;
 }
 
+inline void FileSpliter::onProgress(float value)
+{
+    if (m_iprogress != nullptr){
+        m_iprogress -> DoProgress(value); // 这个是虚方法，但是编译器不会报错
+    }
+}
+
 void FileSpliter::split(){
     cout << "I am Splitting the" << m_filePath << "to" << m_number << "Part" << endl;
     for (int i = 0; i <= m_number; i++){
         cout << i << "/" << m_number << "..." << endl;
-        if (m_iprogress != nullptr){
-            m_iprogress -> DoProgress((i+1) / m_number); // 这个是虚方法，但是编译器不会报错
-        }
+        float progressValue = m_number;
+        progressValue = (i+1) / m_number;
+        onProgress(progressValue);
     }
 }
 
