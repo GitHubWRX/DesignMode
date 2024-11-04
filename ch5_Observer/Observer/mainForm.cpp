@@ -7,9 +7,14 @@
 #include "Form.h"
 #include "TextBox.h"
 #include "FileSpliter.h"
-#include "ProgressBar.h"
-#include "Pie.h"
-#include "IProgress.h"
+
+#include "IProgress.h" // 方法 DoProgress
+// 以下两个类并不用继承IProgress，相反，调用他们的类继承了Progress，并将调用者指针传递给被观察者
+// 如果直接继承IProgress，由于两个类生成进度的方法名不一样，那么各自要增加一个方法DoProgress
+// 本着将修改封闭在特定区域，建议只修改使用者，比如mainForm为新增加的代码，让其继承IProgress
+#include "ProgressBar.h" // 方法 setValue
+#include "Pie.h" // 方法 setDegree
+
 
 // 重定义可以使用using或者typedef
 // using TextBox1 = string;
