@@ -1,12 +1,10 @@
 /*
 最简单的观察者，需要继承IProgress并实现DoProgress，持有具体的观察者（而不去修改它）
 */
+#ifndef PIENOTIFIER_H
+#define PIENOTIFIER_H
 
 #include "../../common.h"
-#include "Form.h"
-#include "TextBox.h"
-#include "FileSpliter.h"
-
 #include "IProgress.h" // 方法 DoProgress
 #include "Pie.h" // 方法 setDegree
 
@@ -33,3 +31,5 @@ void PieNotifier::DoProgress(float value)
 PieNotifier::~PieNotifier()
 {
 }
+
+#endif
