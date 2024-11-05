@@ -14,6 +14,7 @@
 // 本着将修改封闭在特定区域，建议只修改使用者，比如mainForm为新增加的代码，让其继承IProgress
 #include "ProgressBar.h" // 方法 setValue
 #include "Pie.h" // 方法 setDegree
+#include "PieNotifier.h"
 
 
 // 重定义可以使用using或者typedef
@@ -27,14 +28,27 @@ private:
     TextBox* m_txtFilePath; // 待分割文件的路径
     TextBox* m_txtFileNumber; // 待分割文件的个数
     ProgressBar* m_progressBar; // 这里不用修改，依然使用具体的类，其内部的setValue方法将被包装
+    Pie* m_pie; // 所有的实际观察者，都应当由外部用指针传入，否则外部无法访问该内存
 public:
-    mainForm(TextBox* txtFilePath, TextBox* txtFileNumber, ProgressBar* progressBar);
+    mainForm(TextBox* txtFilePath, TextBox* txtFileNumber, ProgressBar* progressBar, Pie* pie);
 
-    void Button1_Click(){
+    void Button1_Click(){ // 在这里初始化被观察者，并添加不同的观察者，将自己也作为其中一个观察者
         string filePath = m_txtFilePath->getText();
         int number = atoi(m_txtFileNumber->getText().c_str());
 
-        FileSpliter spliter(filePath, number, this); // 可传递本类的指针，因实现了IProgress
+        // 首个观察者，将持有file_spliter，然后将自己传递进去，那么其他观察者就没法传递了
+        // 为了能够实现多观察者，需要将FileSpliter改造，支持向量存储多个指针
+        // 这里实现得不是很优雅，因为让一个观察者负责其他观察者的接入，其他观察者也需要被IProgress子类持有
+        FileSpliter spliter(filePath, number); // 可传递本类的指针，因实现了IProgress
+
+        // 将自身递给spliter
+        spliter.add_IProgress(this);
+
+        // 使用栈变量生成PieNotifier对象，并且传递给spliter；问题是这样并
+        PieNotifier pieNotifier(m_pie);
+        spliter.add_IProgress(&pieNotifier);
+
+        // spliter开始工作，通知各个观察者
         spliter.split();
     }
 
@@ -43,10 +57,11 @@ public:
     ~mainForm();
 };
 
-mainForm::mainForm(TextBox* txtFilePath, TextBox* txtFileNumber, ProgressBar* progressBar):
+mainForm::mainForm(TextBox* txtFilePath, TextBox* txtFileNumber, ProgressBar* progressBar, Pie* pie):
     m_txtFilePath(txtFilePath), 
     m_txtFileNumber(txtFileNumber), 
-    m_progressBar(progressBar){ // 具体类型的传递1
+    m_progressBar(progressBar),
+    m_pie(pie){ // 具体类型的传递1
 }
 
 void mainForm::DoProgress(float value)

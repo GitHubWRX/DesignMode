@@ -10,10 +10,13 @@ private:
     string m_filePath;
     int m_number;
     // 如果只是传递观察者的抽象基类，可能会遇到其基类不存在setValue方法（不同观察者方法名称不同）
-    IProgress* m_iprogress; // 抽象通知机制，声明一个接口类，一定要实现DoProgress方法
+    vector<IProgress*> m_iprogress; // 抽象通知机制，声明一个接口类，一定要实现DoProgress方法
 
 public:
-    FileSpliter(string filePath, int nubmer, IProgress* iprogress);
+    FileSpliter(string filePath, int nubmer);
+    int add_IProgress(IProgress* iprogress);
+    int remove_IProgress(IProgress* iprogress);
+
     void split(){};
     ~FileSpliter();
 
@@ -21,18 +24,31 @@ protected:
     void onProgress(float value);
 };
 
-FileSpliter::FileSpliter(string filePath, int number, IProgress* iprogress)
+FileSpliter::FileSpliter(string filePath, int number)
 
 {   
     m_filePath = filePath;
     m_number = number;
-    m_iprogress = iprogress;
+}
+
+inline int FileSpliter::add_IProgress(IProgress *iprogress)
+{
+    m_iprogress.push_back(iprogress);
+    return 0;
+}
+
+inline int FileSpliter::remove_IProgress(IProgress *iprogress)
+{
+    m_iprogress.erase(std::remove(m_iprogress.begin(), m_iprogress.end(), iprogress), m_iprogress.end());  
+    return 0;
 }
 
 inline void FileSpliter::onProgress(float value)
 {
-    if (m_iprogress != nullptr){
-        m_iprogress -> DoProgress(value); // 这个是虚方法，但是编译器不会报错
+    for (vector<IProgress*>::iterator itor = m_iprogress.begin(); itor < m_iprogress.end(); itor++){
+        if (*itor != nullptr){
+            (*itor) -> DoProgress(value); // 这个是虚方法，但是编译器不会报错
+        }
     }
 }
 
