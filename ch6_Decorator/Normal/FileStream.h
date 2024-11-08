@@ -3,7 +3,7 @@
 
 #include "Stream.h"
 
-class FileStream
+class FileStream : public Stream
 {
 private:
     /* data */
