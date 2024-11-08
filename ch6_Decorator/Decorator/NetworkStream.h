@@ -3,12 +3,12 @@
 
 #include "Stream.h"
 
-class MemoryStream : public Stream
+class NetworkStream : public Stream
 {
 private:
     /* data */
 public:
-    MemoryStream(/* args */);
+    NetworkStream(/* args */);
     virtual char read(int number){
         cout << "I am reading Network:" << number << endl;
     }
@@ -18,14 +18,14 @@ public:
     virtual void Write(char data){
         cout << "I am writing Network:" << data << endl;
     }
-    ~MemoryStream();
+    ~NetworkStream();
 };
 
-MemoryStream::MemoryStream(/* args */)
+NetworkStream::NetworkStream(/* args */)
 {
 }
 
-MemoryStream::~MemoryStream()
+NetworkStream::~NetworkStream()
 {
 }
 
