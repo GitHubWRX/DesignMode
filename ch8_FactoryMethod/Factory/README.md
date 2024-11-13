@@ -7,4 +7,6 @@ ch8的Normal即为ch5的Observer模式，这样再进行工厂修改
 根据外部Context判断，传入SpliterFactory工厂类，作为m_factory存入MainFrom
 m_factory->CreateSpliter()，会得到实际的XXX_spliter，然后多态调用其split()方法即可
 
+### 注意事项
+因为多态接口，工厂方法要求入参一致
 
