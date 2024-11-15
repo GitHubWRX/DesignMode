@@ -1,37 +1,51 @@
 #ifndef EMPLOYEEREADER_H
 #define EMPLOYEEREADER_H
 #include "../../common.h"
+#include "SqlConnection.h"
+#include "SqlCommand.h"
+#include "Employee.h"
+#include "DataQuery.h"
 
 class EmployeeReader
 {
 private:
     /* data */
     vector<Employee> employees;
-public:
-    EmployeeReader(/* args */);
-    vector<Employee> GetEmployee(){
-        SqlConnection* connection = new SqlConnection();
-        connection->ConnectionString = "...";
-        
-        SqlCommand* command = new SqlCommand();
-        command->CommandText = "..."
-        command->SetConnection(connection);
+    DataQuery* dataQuery;
 
+public:
+    EmployeeReader(DataQuery *dq);
+    vector<Employee> GetEmployee(){
+
+        // 建立连接
+        SqlConnection* connection = new SqlConnection();
+        connection->SetConnectionString("...");
+
+
+        // 建立命令对象，关联连接，这里的外部接口dataQuery需要在类初始化的时候传入
+        SqlCommand* command = new SqlCommand(dataQuery);
+        command->SetConnection(connection);
+        command->SetCommandText("...");
+
+        // 执行查询并获取结果对象
         SqlDataReader* reader = command->ExecuteReader();
-        while(reader->Read()){
-            employees.push_back(reader.Result());
+        while(reader->GetStatus()){
+            for(auto employee : reader->GetEmployees()){
+                employees.push_back(employee);
+            }
         }
+        return employees;
     }
     ~EmployeeReader();
 };
 
-EmployeeReader::EmployeeReader(/* args */)
+inline EmployeeReader::EmployeeReader(DataQuery *dq)
 {
+    dataQuery = dq;
 }
 
 EmployeeReader::~EmployeeReader()
 {
 }
-
 
 #endif
