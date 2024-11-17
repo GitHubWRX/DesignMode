@@ -4,17 +4,17 @@
 #include "SqlConnection.h"
 #include "SqlCommand.h"
 #include "Employee.h"
-#include "DataQuery.h"
+#include "SqlDataQuery.h"
 
 class EmployeeReader
 {
 private:
     /* data */
     vector<Employee> employees;
-    DataQuery* dataQuery;
+    SqlDataQuery* dataQuery;
 
 public:
-    EmployeeReader(DataQuery *dq);
+    EmployeeReader(SqlDataQuery *dq);
     vector<Employee> GetEmployee(){
 
         // 建立连接
@@ -39,7 +39,7 @@ public:
     ~EmployeeReader();
 };
 
-inline EmployeeReader::EmployeeReader(DataQuery *dq)
+inline EmployeeReader::EmployeeReader(SqlDataQuery *dq)
 {
     dataQuery = dq;
 }

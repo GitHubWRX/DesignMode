@@ -1,25 +1,25 @@
-#ifndef DATAQUERY_H
-#define DATAQUERY_H
+#ifndef SQLDATAQUERY_H
+#define SQLDATAQUERY_H
 #include "../../common.h"
 #include "SqlConnection.h"
 #include "EmployeeReader.h"
 
 // 这里只需要定义纯虚函数就可以了，不然没有尽头了，总要具体实现
-class DataQuery
+class SqlDataQuery
 {
 private:
     /* data */
 public:
-    DataQuery(/* args */);
+    SqlDataQuery(/* args */);
     virtual SqlDataReader* Query(string str, SqlConnection* sqlCon)=0;
-    ~DataQuery();
+    ~SqlDataQuery();
 };
 
-DataQuery::DataQuery(/* args */)
+SqlDataQuery::SqlDataQuery(/* args */)
 {
 }
 
-DataQuery::~DataQuery()
+SqlDataQuery::~SqlDataQuery()
 {
 }
 

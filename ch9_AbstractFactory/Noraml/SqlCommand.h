@@ -3,7 +3,7 @@
 #include "../../common.h"
 #include "SqlConnection.h"
 #include "SqlDataReader.h"
-#include "DataQuery.h"
+#include "SqlDataQuery.h"
 
 class SqlCommand
 {
@@ -11,16 +11,16 @@ private:
     /* data */
     SqlConnection* sqlConnection;
     string commandText;
-    DataQuery* dataQuery;
+    SqlDataQuery* dataQuery;
 public:
-    SqlCommand(DataQuery* dq);
+    SqlCommand(SqlDataQuery* dq);
     void SetConnection(SqlConnection* sqlcon);
     void SetCommandText(string str);
     SqlDataReader* ExecuteReader();
     ~SqlCommand();
 };
 
-inline SqlCommand::SqlCommand(DataQuery *dq)
+inline SqlCommand::SqlCommand(SqlDataQuery *dq)
 {
     dataQuery = dq;
 }
