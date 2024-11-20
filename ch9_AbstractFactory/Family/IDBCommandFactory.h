@@ -2,6 +2,8 @@
 #define IDBCommandFactory_h
 #include "IDBCommand.h"
 
+class IDBCommand; // 这个前置声明如果不写，就会导致SqlCommandFactory.h中的CreateDBCommand出错
+
 class IDBCommandFactory
 {
 public:

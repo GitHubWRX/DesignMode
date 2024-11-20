@@ -20,7 +20,7 @@ SqlCommandFactory::SqlCommandFactory(SqlDataQuery* sq):sqlDataQuery(sq)
 {
 }
 
-IDBCommand *SqlCommandFactory::CreateDBCommand()
+IDBCommand* SqlCommandFactory::CreateDBCommand()
 {
     return new SqlCommand(sqlDataQuery);
 }
