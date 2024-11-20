@@ -6,7 +6,7 @@ class IDBDataReaderFactory
 {
 public:
     IDBDataReaderFactory(/* args */);
-    virtual IDBDataReader* CreateDBDataQuey()=0;
+    virtual IDBDataReader* CreateDBDataReader()=0;
     ~IDBDataReaderFactory();
 };
 

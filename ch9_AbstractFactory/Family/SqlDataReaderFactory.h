@@ -9,7 +9,7 @@ private:
     /* data */
 public:
     SqlDataReaderFactory(/* args */);
-    virtual IDBDataReader* CreateDBDataQuey();
+    virtual IDBDataReader* CreateDBDataReader();
     ~SqlDataReaderFactory();
 };
 
@@ -17,7 +17,7 @@ SqlDataReaderFactory::SqlDataReaderFactory(/* args */)
 {
 }
 
-inline IDBDataReader *SqlDataReaderFactory::CreateDBDataQuey()
+inline IDBDataReader *SqlDataReaderFactory::CreateDBDataReader()
 {
     return nullptr;
 }
