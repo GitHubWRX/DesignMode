@@ -13,24 +13,22 @@ protected:
     virtual void BuildPart1() override{
         cout << "build part1" << endl;
     }
-    virtual void BuildPart1() override{
+    virtual void BuildPart2() override{
         cout << "build part2" << endl;
     }
-    virtual void BuildPart1() override{
+    virtual bool BuildPart3() override{
         cout << "build part3" << endl;
     }
-    virtual void BuildPart1() override{
+    virtual void BuildPart4() override{
         cout << "build part4" << endl;
     }
-    virtual void BuildPart1() override{
+    virtual void BuildPart5() override{
         cout << "build part5" << endl;
     }
 };
 
 StoneHouse::StoneHouse(/* args */)
 {
-    // 子类调用父类的初始化方法，实际上形成多态构造
-    Init();
 }
 
 StoneHouse::~StoneHouse()
