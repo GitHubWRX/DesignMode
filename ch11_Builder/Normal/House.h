@@ -1,7 +1,7 @@
 #ifndef HOUSE_H
 #define HOUSE_H
 
-#include "../common.h"
+#include "../../common.h"
 class House
 {
 private:

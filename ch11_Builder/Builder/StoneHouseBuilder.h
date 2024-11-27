@@ -1,15 +1,14 @@
-#ifndef STONEHOUSE_H
-#define STONEHOUSE_H
-// 子类House也不需要继承各种方法了
-#include "House.h"
-class StoneHouse : public House
+#ifndef StoneHouseBuilder_h
+#define StoneHouseBuilder_h
+
+#include "HouseBuilder.h"
+
+class StoneHouseBuilder : public HouseBuilder
 {
 private:
-    /* data */
+    House* pHouse;
 public:
-    StoneHouse();
-    ~StoneHouse();
-protected:
+    StoneHouseBuilder(House* house);
     virtual void BuildPart1() override{
         cout << "build part1" << endl;
     }
@@ -25,14 +24,16 @@ protected:
     virtual void BuildPart5() override{
         cout << "build part5" << endl;
     }
+    ~StoneHouseBuilder();
 };
 
-StoneHouse::StoneHouse(/* args */)
+StoneHouseBuilder::StoneHouseBuilder(House* house):HouseBuilder(house)
+{
+    // 使用初始化列表调用父类的构造函数
+}
+StoneHouseBuilder::~StoneHouseBuilder()
 {
 }
 
-StoneHouse::~StoneHouse()
-{
-}
 
 #endif
