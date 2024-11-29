@@ -26,12 +26,17 @@ Singleton::Singleton(/* args */)
 {
 }
 
-// 非线程安全版本，多线程下，均可能执行到23行，但未执行24行，重复创建
+// 双检查锁，替换Lock降低开销（但是可能存在读未初始化的内存）
+// 一般对象的new初始化：1.分配内存 2.使用构造器 3.返回指针
+// 但有时编译器可能先3后2，即先返回指针，然后才真正调用new，这样会导致其他读取者误读
 inline Singleton *Singleton::getInstance()
 {   
-    Lock lock; // 此处为伪代码，意味着会获取锁，但是开销比较大，每个调用均获取
+    // 第一个检查点，防止读等待
     if (m_instance == nullptr){
-        m_instance = new Singleton();
+        Lock lock; // 为空才去竞争，第二个检查点，防止写冲突
+        if(m_instance == nullptr){
+            m_instance = new Singleton();
+        }
     }
     return m_instance;
 }
