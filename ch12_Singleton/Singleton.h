@@ -28,7 +28,8 @@ Singleton::Singleton(/* args */)
 
 // 非线程安全版本，多线程下，均可能执行到23行，但未执行24行，重复创建
 inline Singleton *Singleton::getInstance()
-{
+{   
+    Lock lock; // 此处为伪代码，意味着会获取锁，但是开销比较大，每个调用均获取
     if (m_instance == nullptr){
         m_instance = new Singleton();
     }
