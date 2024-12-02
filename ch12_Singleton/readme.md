@@ -17,3 +17,61 @@
 2. 线程池：系统中需要共享一个线程池。
 3. 配置管理器：全局配置信息在应用程序中唯一，使用单例模式进行管理。
 4. 日志记录器：保证整个程序中只有一个日志记录器实例来写日志。
+
+### 单例模式的实现
+最简单的单例模式通过使用一个静态成员变量来存储实例，静态成员函数来访问实例。这里是一个典型的 C++ 实现：
+
+```cpp
+
+#include <iostream>
+using namespace std;
+
+class Singleton {
+private:
+    // 私有构造函数，防止外部创建实例
+    Singleton() {
+        cout << "Singleton instance created" << endl;
+    }
+
+    // 私有拷贝构造函数和赋值运算符，防止外部复制对象
+    Singleton(const Singleton&) = delete;
+    Singleton& operator=(const Singleton&) = delete;
+
+    // 静态指针，存储唯一的实例
+    static Singleton* instance;
+
+public:
+    // 提供公共的静态方法来获取唯一的实例
+    static Singleton* getInstance() {
+        if (instance == nullptr) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+
+    void showMessage() {
+        cout << "Hello from Singleton!" << endl;
+    }
+};
+
+// 初始化静态成员变量
+Singleton* Singleton::instance = nullptr;
+
+int main() {
+    // 获取唯一实例
+    Singleton* singleton1 = Singleton::getInstance();
+    singleton1->showMessage();
+
+    // 获取同一个实例
+    Singleton* singleton2 = Singleton::getInstance();
+    singleton2->showMessage();
+
+    // 验证两个实例是否是同一个
+    if (singleton1 == singleton2) {
+        cout << "Both instances are the same." << endl;
+    }
+
+    return 0;
+}
+
+```

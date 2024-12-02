@@ -18,7 +18,7 @@ public:
     ~Singleton();  // 析构函数
 };
 
-// 静态成员变量的定义
+// 静态成员变量的定义，需要在类外部定义
 // m_instance 是一个原子指针，它用于确保多线程环境下对 Singleton 实例的访问是安全的。
 std::atomic<Singleton*> Singleton::m_instance(nullptr);
 std::mutex Singleton::m_mutex;
