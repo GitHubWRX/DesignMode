@@ -74,7 +74,7 @@ public:
     double getWidth() const { return width; }
 };
 
-// 方钉适配器，使其看起来像圆钉
+// 方钉适配器，使其看起来像圆钉，重写RoundPeg的方法
 class SquarePegAdapter : public RoundPeg {
 private:
     SquarePeg& squarePeg; // 引用方形钉子
